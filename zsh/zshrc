@@ -128,4 +128,4 @@ umask 022
 #########################
 ## Mac specific Config ##
 #########################
-source ~/.zshrc_mac
+source ~/.mac.zsh
