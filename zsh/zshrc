@@ -1,0 +1,131 @@
+#################
+## ZSH Modules ##
+#################
+
+# Enable Completetion module
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle :compinstall filename '$HOME/.zshrc'
+
+autoload -Uz compinit && compinit
+
+# Enable colors module
+autoload -U colors && colors
+
+#####################
+## History Options ##
+#####################
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Append hustory from multiple zsh sessions so all of the sessions 
+# share the same history
+setopt appendhistory
+# Remove blank chars from history
+setopt histreduceblanks
+# Ignore duplicate commands
+setopt histignorealldups
+# Import new commands incrementally
+setopt sharehistory
+
+#################
+## ZSH Options ##
+#################
+
+# Disable cd into an existing folder if the command fails
+unsetopt autocd
+# Disable beep sounds
+unsetopt beep
+# Immediately report the status of background jobs
+setopt notify
+# Report the status of backround and suspended jobs before exit
+setopt checkjobs
+
+##################
+## Key bindings ##
+##################
+
+# Use emacs keybindings
+bindkey -e
+# Use <Up> to go back in history
+bindkey "^[[A" history-beginning-search-backward
+# Use <Down> to go forward in history
+bindkey "^[[B" history-beginning-search-forward
+# Undo last text modification (Ctrl+/)
+bindkey '^_' undo
+
+#############
+## Exports ##
+#############
+
+# Set default editor to vim
+export EDITOR='vim'
+# Set default pager to vim
+export PAGER='less'
+
+# Set vim as the default man pager.
+export MANPAGER="/bin/sh -c \"unset MANPAGER;col -b -x | \
+     vim -R -M \
+     -c 'set ft=man nomod nonumber norelativenumber nolist ignorecase hlsearch' \
+     -c 'map q :q<CR>' \
+     -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+     -c 'nunmap <Up>' -c 'nunmap <Down>' -c 'nunmap <Left>' -c 'nunmap <Right>' \
+     -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+
+####################
+## Custom aliases ##
+####################
+
+alias ls='ls -G'
+alias lla='ls -la'
+
+# Fix for broken AWS_PAGER env variable https://docs.aws.amazon.com/cli/latest/userguide/cliv2-migration.html#cliv2-migration-output-pager
+alias aws='MANPAGER="less" aws'
+
+##################
+## Setup prompt ##
+##################
+
+# Function substitution in prompt
+setopt prompt_subst
+
+## Print the return code, if not 0.
+return_code="%(?..%{%B$fg[red]%}%?%b↵%{$reset_color%})"
+
+## Print the number of jobs, if not 0.
+count_jobs="%1(j.[%j].)"
+
+## Import vcs_info config for git
+source ~/.git.zsh
+
+# Run commands before settings the prompt
+precmd () {
+    vcs_info
+	RPROMPT="${return_code} ${count_jobs}${vcs_info_msg_0_}"
+}
+
+# Set the prompt.
+autoload -U promptinit && promptinit
+
+# (Path)
+# [user@hostname]
+PROMPT='%B(%~%1(C./.))%b
+%B[%b%{$fg_bold[magenta]%}%n%{$reset_color%}%B@$b%{$fg_bold[red]%}%m%{$reset_color%}%B]%# %b'
+
+#################
+## Misc config ##
+#################
+
+# Default umask
+umask 022
+
+#########################
+## Mac specific Config ##
+#########################
+source ~/.zshrc_mac
