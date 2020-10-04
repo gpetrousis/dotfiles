@@ -15,3 +15,10 @@ The configurations should work on both Linux and Mac
 
 The install script will create a symbolic link for each of these file into your home folder.
 In case there is already an existing link it will be deleted and if there is already a config file it will be kept as backup in the format of `<filename>.<date>.backup`
+
+## Future work
+- Add vim config files
+- Add vscode config
+- Add mac flag in the installation script
+- Add makefile
+- Add Tests?
