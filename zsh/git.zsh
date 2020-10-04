@@ -37,10 +37,10 @@ zstyle -e ':vcs_info:git+set-message:*' hooks 'reply=( ${${(k)functions[(I)[+]vi
 function +vi-git-set-message-status() {
     local git_porcelain ahead behind staged unstaged untracked
     local -a branchstatus gitstatus
-    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l | sed 's/ //g')
     (( $ahead )) && branchstatus+="$ZSH_THEME_GIT_PROMPT_AHEAD${ahead}"
 
-    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l | sed 's/ //g')
     (( $behind )) && branchstatus+="$ZSH_THEME_GIT_PROMPT_BEHIND${behind}"
 
     hook_com[branch]="$ZSH_THEME_GIT_PROMPT_BRANCH${hook_com[branch]}${branchstatus}"
@@ -49,18 +49,15 @@ function +vi-git-set-message-status() {
     if [ -z "$git_porcelain" ]; then 
          gitstatus+="$ZSH_THEME_GIT_PROMPT_CLEAN"
     else 
-        staged=$(echo "$git_porcelain" | grep "^[MARCD]  " | wc -l)
+        staged=$(echo "$git_porcelain" | grep "^[MARCD]  " | wc -l | sed 's/ //g')
         (( $staged )) && gitstatus+="$ZSH_THEME_GIT_PROMPT_STAGED${staged}"
 
-        unstaged=$(echo "$git_porcelain" | grep "^ [MARCD] " | wc -l)
+        unstaged=$(echo "$git_porcelain" | grep "^ [MARCD] " | wc -l | sed 's/ //g')
         (( $unstaged )) && gitstatus+="$ZSH_THEME_GIT_PROMPT_UNSTAGED${unstaged}"
 
-        untracked=$(echo "$git_porcelain" | grep "^??" | wc -l)
+        untracked=$(echo "$git_porcelain" | grep "^??" | wc -l | sed 's/ //g')
         (( $untracked )) && gitstatus+="$ZSH_THEME_GIT_PROMPT_UNTRACKED${untracked}"
     fi
-
-    # Trim trailing chars
-    gitstatus="${gitstatus%%*( )}"
 
     gitstatus+="%{$reset_color%}"
 
