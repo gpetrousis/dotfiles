@@ -12,20 +12,6 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✓%{$reset_color%}"
 
 autoload -Uz vcs_info
 
-function get_vcs_info_formats() {
-  local format
-  # ${ZSH_THEME_GIT_PROMPT_SEPARATOR} \
-  # %c \
-  # $ZSH_THEME_GIT_PROMPT_SUFFIX \
-  # %B%m%%b"
-
-  echo $format
-}
-
-function get_vcs_info_actionformat() {
-
-}
-
 zstyle ':vcs_info:*' enable git
 
 zstyle ':vcs_info:*' check-for-staged-changes true
