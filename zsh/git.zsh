@@ -45,6 +45,7 @@ function +vi-git-set-message-status() {
         (( $untracked )) && gitstatus+="$ZSH_THEME_GIT_PROMPT_UNTRACKED${untracked}"
     fi
 
+    gitstatus=$(echo $gitstatus | sed 's/ *\$//g')
     gitstatus+="%{$reset_color%}"
 
     hook_com[staged]=${gitstatus}
