@@ -7,6 +7,10 @@ function install() {
         if [ -d $config_path ]; then
             config_files="$config_path/*"
             for filename in $config_files; do
+                if [[ "$filename" == *"mac."* ]] && [ "$DOTFILES_TARGET" != "MACOS" ]; then
+                    continue
+                fi
+
                 source="$(pwd)/$filename"
                 target="$HOME/.${filename##*/}"
 
