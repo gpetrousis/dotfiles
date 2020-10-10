@@ -10,7 +10,7 @@ function uninstall() {
                 source="$(pwd)/$filename"
                 target="$HOME/.${filename##*/}"
 
-                if [ -e $target ] && [ -L $target ]; then
+                if [ -e $target ] && [ -L $target ] && [ "$(realpath $target)" == "$source" ]; then
                     echo "[INFO] Deleting linked file: $target -> $(realpath $target)"
                     rm $target
                 fi
