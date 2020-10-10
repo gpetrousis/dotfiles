@@ -107,7 +107,7 @@ source ~/.git.zsh
 # Run commands before settings the prompt
 precmd () {
     vcs_info
-	RPROMPT="${return_code} ${count_jobs}${vcs_info_msg_0_}"
+	RPROMPT="${return_code}${count_jobs}${vcs_info_msg_0_}"
 }
 
 # Set the prompt.
