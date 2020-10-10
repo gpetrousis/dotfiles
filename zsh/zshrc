@@ -129,3 +129,10 @@ umask 022
 ## Mac specific Config ##
 #########################
 source ~/.mac.zsh
+
+##################
+## Extra Config ##
+##################
+if test -f "~/.extra.zsh"; then
+    source ~/.extra.zsh
+fi
