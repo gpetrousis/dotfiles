@@ -1,10 +1,9 @@
 #!/bin/bash
 
-configs=("zsh")
+source ./scripts/configs.sh
 
 function install() {
     for config_path in ${configs[@]}; do
-        # echo $config_path
         if [ -d $config_path ]; then
             config_files="$config_path/*"
             for filename in $config_files; do
@@ -21,6 +20,7 @@ function install() {
                     fi
                 fi
 
+                echo "[INFO] Linking config file: $source -> $target"
                 ln -s $source $target
             done
         fi
