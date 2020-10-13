@@ -1,7 +1,11 @@
-.PHONY: install
+.PHONY: install zsh
 
-install:
-	./scripts/install.sh
+install: zsh
 
-uninstall:
-	./scripts/uninstall.sh
+uninstall: uninstall_zsh
+
+zsh:
+	./scripts/zsh.sh install
+
+uninstall_zsh:
+	./scripts/zsh.sh uninstall
