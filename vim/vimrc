@@ -33,6 +33,9 @@ filetype plugin indent on
 " Turn on syntax checking
 syntax on
 
+" Do not make vim compatible with vi
+set nocompatible
+
 " Number of spaces that a <Tab> in the file counts for
 set tabstop=4
 
@@ -102,6 +105,9 @@ set list listchars=tab:▸\ ,nbsp:_,trail:·
 
 " Show (partial) command in the last line of the screen.
 set showcmd
+
+" Jump to matching bracket
+set showmatch
 
 " Use incremental search
 set incsearch
