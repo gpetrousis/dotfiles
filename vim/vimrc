@@ -1,0 +1,232 @@
+" ******************** "
+" Plugins Installation "
+" ******************** "
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" Add symbols around text
+Plug 'tpope/vim-surround'
+
+" Syntax checking
+Plug 'vim-syntastic/syntastic'
+
+" Comment options
+Plug 'scrooloose/nerdcommenter'
+
+" Solarized Theme
+Plug 'altercation/vim-colors-solarized'
+
+" Project tree
+Plug 'preservim/nerdtree'
+
+" Initialize plugin system
+call plug#end()
+
+" *********** "
+" Preferences "
+" *********** "
+
+" Enable filetype autodetection
+filetype plugin indent on
+
+" Turn on syntax checking
+syntax on
+
+" Number of spaces that a <Tab> in the file counts for
+set tabstop=4
+
+" How many columns text is indented with the reindent operations (<< and >>)
+set shiftwidth=4
+
+" Number of spaces that a <Tab> counts for while performing editing	operations
+set softtabstop=4
+
+" Don't use tabs for indentation
+set nosmarttab
+
+" Use the appropriate number of spaces to insert a <Tab>
+set expandtab
+
+" Add line numbers
+set number
+
+" Copy indent from current line when starting a new line
+set autoindent
+
+" Where it makes sense, remove a comment leader when joining lines
+set formatoptions+=j
+
+" Get the amount of indent for line {lnum} according the C indenting rules
+set cindent
+
+" Buffer becomes hidden when it is |abandon|ed
+set hidden
+
+" Highlight on search
+set hlsearch
+
+" Do not wrap long lines
+set nowrap
+
+" Show a popup menu in completition
+set completeopt=menu,longest
+
+" Command-line completion operates in an enhanced mode
+set wildmenu
+
+" Complete the next full match
+set wildmode=longest:full,full
+
+" Disable spelling by default
+set nospell
+
+" List of wordlist names
+set spelllang=el,en_us,sv
+
+" The kind of folding used for the current window
+set foldmethod=syntax
+
+" Sets the maximum nesting of folds for the "indent" and "syntax" methods
+set foldnestmax=1
+
+" disable folding
+set nofoldenable
+
+" Only searches that contain uppercase letters are case sensitive
+set ignorecase
+set smartcase
+
+" Strings to use in 'list' mode and for the |:list| command
+set list listchars=tab:▸\ ,nbsp:_,trail:·
+
+" Show (partial) command in the last line of the screen.
+set showcmd
+
+" Use incremental search
+set incsearch
+
+" Set swap/backup/undo directories
+set directory^=~/.vim/files/swap//,.
+set backupdir=~/.vim/files/backup//,.
+set undodir=~/.vim/files/undo//,.
+
+" Set the colorscheme (placed in ~/.vim/colors)
+set background=dark
+set t_Co=256
+silent! colorscheme solarized
+
+" *************** "
+" Plugin settings "
+" *************** "
+
+let g:solarized_termcolors=256
+
+"-- NERDcommenter --"
+
+" Add extra spaces around delimiter
+let NERDSpaceDelims = 2
+
+"-- NERDTree --"
+
+" Improve the apearance
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+" Change activate button to <space>
+let NERDTreeMapActivateNode='<space>'
+
+"-- Syntastic --"
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_loc_list_height = 5
+
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+
+" **************** "
+" Custom functions "
+" **************** "
+
+" Toggle between absolute and relative line numbers.
+function! NumberToggle()
+    if(&relativenumber ==1)
+        set relativenumber!
+    else
+        set relativenumber
+    endif
+endfunc
+
+" Use different comment styles based on the type of selection
+function! CommentVisual() range
+    let m = visualmode()
+    if m ==# 'v'
+        "Character-wise visual
+        call NERDComment('x', "comment")
+    elseif m == 'V'
+        "Line-wise visual
+        execute a:firstline . "," . a:lastline . "call NERDComment('x', 'sexy')"
+    elseif m == "\<C-V>"
+        "Block-wise visual
+        call NERDComment('x', "comment")
+    endif
+endfunction
+
+" ************ "
+" Key bindings "
+" ************ "
+
+" Disable arrow keys
+nmap <Up> <NOP>
+nmap <Down> <NOP>
+nmap <Left> <NOP>
+nmap <Right> <NOP>
+
+" Disable PageUp and PageDown buttons
+nmap <PageUp> 9-<cr>
+nmap <PageDown> 9+<cr>
+imap <PageUp> <NOP>
+imap <PageDown> <NOP>
+
+" Write with sudo
+cnoremap w!! w !sudo tee > /dev/null %
+
+" Fold with <space>
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+
+" Nerd commenter
+nnoremap <silent> // :call NERDComment('n', "toggle")<CR>
+vnoremap <silent> // :call CommentVisual()<CR>
+nnoremap <silent> ?? :call NERDComment('n', "uncomment")<CR>
+
+" Toggle relative/absolute line numbers
+nnoremap <C-n> :call NumberToggle()<CR>
+
+" Disable highlight
+nnoremap <Leader>/ :noh<CR>
+
+" Toggle list
+nnoremap <Leader>l :set list!<CR>
+
+" Toggle spell check
+nnoremap <Leader>s :set spell!<CR>
+
+" Set the working directory to the one containing the current file
+nnoremap <leader>cd :cd %:h<cr>
+
+" Yank the line without the new line in the front
+map nY ^v$hy
+
+" Use <C-Tab> instread of <C-6> for switching between buffers
+map <C-Tab> <C-^>
+
+" Toggle NERDTree on/off
+nmap <F4> :NERDTreeToggle<CR>
