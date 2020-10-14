@@ -5,13 +5,13 @@ install: zsh vim
 uninstall: uninstall_zsh uninstall_vim
 
 zsh:
-	./scripts/zsh.sh install
+	cd zsh && make install
 
 uninstall_zsh:
-	./scripts/zsh.sh uninstall
+	cd zsh && make uninstall
 
 vim:
-	./scripts/vim.sh install 
+	cd vim && make install
 
 uninstall_vim:
-	./scripts/vim.sh uninstall
+	cd vim && make uninstall
