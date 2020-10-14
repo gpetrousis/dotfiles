@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 config_path=$(pwd)
 files_to_exclude=("Makefile README.md")
 
