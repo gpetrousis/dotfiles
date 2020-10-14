@@ -1,5 +1,15 @@
-# ZSH Config
+# Zsh Configg
 Settings for the ZSH shell including promt and git support.
+
+## Installation
+`make install`
+
+The install script will link the config files to your Home directory.
+
+## Installation
+`make uninstall`
+
+The uninstall script will remove any linked files that were created from the install script.
 
 ## Prompt
 ![ZSH Prompt](../docs/zsh_prompt.png "ZSH Prompt")
@@ -18,8 +28,9 @@ errorCode↵[RunningJobs][GitPrompt]
 For more information you can read the documentation about [Prompt Expansion](http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html).
 
 ## Git Prompt
+
 ### Usage
-To update the git prompt change the Variables in the `.git.zsh`
+To update the git prompt change the Variables in the `.git.zsh`:
 
 ```
 ZSH_THEME_GIT_PROMPT_PREFIX="%B[%%b"
@@ -35,7 +46,7 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg_bold[cyan]%}?"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✓%{$reset_color%}"
 ```
 
-To add it to the prompt add the following to the `.zshrc` file
+To add it to the prompt add the following to the `.zshrc` file:
 
 ```
 precmd () {

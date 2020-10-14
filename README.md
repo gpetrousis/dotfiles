@@ -1,5 +1,9 @@
 # dotfiles
-A collection of my personal configuration dotfiles for ZSH.
+A collection of my personal configuration dotfiles.
+
+Available configurations:
+- [Zsh](zsh/README.md)
+- [Vim](vim/README.md)
 
 The configurations should work on both Linux and MacOS
 
@@ -17,8 +21,15 @@ At the end of the day you are responsible for what is running on your machine.
 ### Run the install script
 `make install`
 
-The install script will create a symbolic link for each of these file into your home folder.
+To install configurations separately you can either:
+- Run `make <config>`. Eg: `make zsh`
+- Navigate to the config folder and install. Eg: `cd vim && make install`
+
+The install script will link all the available config files to your Home path, create necessary directories and download any needed dependencies.
+
 In case there is already an existing link it will be deleted and if there is already a config file it will be kept as backup in the format of `<filename>.<date>.backup`.
+
+Any created folders will be kept in the repo directory and will be linked as well. This way it's easier to clean-up in case you don't want to use these configs anymore.
 
 #### For MacOS installation run
 `make install DOTFILES_TARGET="MACOS"`
@@ -28,14 +39,16 @@ This will link MacOS specific config files.
 ### Uninstall
 `make uninstall`
 
-The uninstall script will delete any linked files that were created from the install command.
+To install configurations separately you can either:
+- Run `make uninstall_<config>`. Eg: `make uninstall_zsh`
+- Navigate to the config folder and uninstall. Eg: `cd vim && make uninstall`
+
+The uninstall script will delete any linked files and directories that were created from the install command.
 
 ## Support
 If you find something that is not working as expected feel free to [open an issue](https://github.com/gpetrousis/dotfiles/issues) and I will try to take a look at it as fast as possible
 
 ## Future work
-- Add vim config files
-- Add gvim/mvim config files
 - Add vscode config
 - Add AWS Profile to prompt
 
