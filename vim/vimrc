@@ -126,8 +126,6 @@ silent! colorscheme solarized
 " Plugin settings "
 " *************** "
 
-let g:solarized_termcolors=256
-
 "-- NERDcommenter --"
 
 " Add extra spaces around delimiter
