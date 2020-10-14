@@ -39,7 +39,7 @@ This will link MacOS specific config files.
 ### Uninstall
 `make uninstall`
 
-To install configurations separately you can either:
+To uninstall configurations separately you can either:
 - Run `make uninstall_<config>`. Eg: `make uninstall_zsh`
 - Navigate to the config folder and uninstall. Eg: `cd vim && make uninstall`
 
