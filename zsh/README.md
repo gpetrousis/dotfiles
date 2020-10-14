@@ -1,4 +1,4 @@
-# Zsh Configg
+# Zsh Config
 Settings for the ZSH shell including promt and git support.
 
 ## Installation
@@ -6,7 +6,7 @@ Settings for the ZSH shell including promt and git support.
 
 The install script will link the config files to your Home directory.
 
-## Installation
+## Uninstall
 `make uninstall`
 
 The uninstall script will remove any linked files that were created from the install script.

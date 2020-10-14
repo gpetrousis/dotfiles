@@ -2,8 +2,8 @@
 A collection of my personal configuration dotfiles.
 
 Available configurations:
-- [Zsh](zsh/README.md)
-- [Vim](vim/README.md)
+- [Zsh](zsh/)
+- [Vim](vim/)
 
 The configurations should work on both Linux and MacOS
 
