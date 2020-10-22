@@ -128,13 +128,13 @@ umask 022
 #########################
 ## Mac specific Config ##
 #########################
-if test -f "~/.mac.zsh"; then
+if [[ -f ~/.mac.zsh ]]; then
     source ~/.mac.zsh
 fi
 
 ##################
 ## Extra Config ##
 ##################
-if test -f "~/.extra.zsh"; then
+if [[ -f ~/.extra.zsh ]]; then
     source ~/.extra.zsh
 fi
