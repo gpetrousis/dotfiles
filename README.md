@@ -4,6 +4,7 @@ A collection of my personal configuration dotfiles.
 Available configurations:
 - [Zsh](zsh/)
 - [Vim](vim/)
+- [VSCode](vscode/)
 
 The configurations should work on both Linux and MacOS
 
@@ -38,6 +39,11 @@ This will link MacOS specific config files.
 
 ### Uninstall
 `make uninstall`
+
+#### For MacOS uninstallation run
+`make uninstall DOTFILES_TARGET="MACOS"`
+
+This will unlink MacOS specific config files.
 
 To uninstall configurations separately you can either:
 - Run `make uninstall_<config>`. Eg: `make uninstall_zsh`

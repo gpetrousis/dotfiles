@@ -15,3 +15,10 @@ vim:
 
 uninstall_vim:
 	cd vim && make uninstall
+
+vscode:
+	cd vscode && make install
+
+uninstall_vscode:
+	cd vscode && make uninstall
+

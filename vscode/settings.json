@@ -1,0 +1,23 @@
+{
+    // Workbench settings
+    "workbench.enableExperiments": false,
+    "workbench.colorTheme": "Solarized Dark",
+    
+    // Editor settings
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+
+    // Do not use spaces for Makefiles
+    "[makefile]":{
+        "editor.insertSpaces": false
+    },
+
+    // Python settings
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+
+    // Vim
+    "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "~/.vimrc",
+}
