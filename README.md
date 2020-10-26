@@ -55,7 +55,6 @@ The uninstall script will delete any linked files and directories that were crea
 If you find something that is not working as expected feel free to [open an issue](https://github.com/gpetrousis/dotfiles/issues) and I will try to take a look at it as fast as possible
 
 ## Future work
-- Add vscode config
 - Add AWS Profile to prompt
 
 ## Status
