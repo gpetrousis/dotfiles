@@ -27,13 +27,13 @@ for file in $config_files; do
     if [[ -e $target ]]; then
         if [[ -L $target ]]; then
             echo "[INFO] Deleting existing linked file: $target -> $(realpath $target)"
-            rm $target
+            rm "$target"
         else
             echo "[INFO] Backing up existing file: $target"
-            mv $target ${target}.`date "+%Y%m%d%H%M%S"`.backup
+            mv "$target" "$target.$(date "+%Y%m%d%H%M%S").backup"
         fi
     fi
 
     echo "[INFO] Linking config file: $source -> $target"
-    ln -s $source $target
+    ln -s "$source" "$target"
 done

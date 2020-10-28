@@ -13,6 +13,6 @@ for file in $config_files; do
 
     if [[ -e $target ]] && [[ -L $target ]] && [[ "$(realpath $target)" == "$source" ]]; then
         echo "[INFO] Deleting linked file: $target -> $(realpath $target)"
-        rm $target
+        rm "$target"
     fi
 done

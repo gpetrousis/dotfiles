@@ -1,8 +1,8 @@
-.PHONY: install zsh vim
+.PHONY: install zsh vim vscode
 
-install: zsh vim
+install: zsh vim vscode
 
-uninstall: uninstall_zsh uninstall_vim
+uninstall: uninstall_zsh uninstall_vim uninstall_vscode
 
 zsh:
 	cd zsh && make install
