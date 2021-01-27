@@ -1,12 +1,28 @@
 #!/bin/bash -e
+set -o errexit
+set -o nounset
+set -o pipefail
+
+die() {
+    local -r msg="${1}"
+    local -r code="${2:-90}"
+    echo "${msg}" >&2
+    exit "${code}"
+}
 
 function usage {
-    echo "Usage:"
-    echo "  $0 [options]"
-    echo "      -c <config_path>     The path within the dotfiles structure to handle the files. (Default: Current dir)"
-    echo "      -s                   Skip dot. Do not add a dot in front of the config files when linkins (Default: 0)"
-    echo "      -t <target_base>     The target base path (Default: Home dir)"
-    echo "      -h                   Print this message"
+    cat <<USAGE_TEXT
+Usage: ${0} [-h] [-c <ARG>] [-s] [-t <ARG>]
+OPTIONS:
+-h | -- help
+        Print this help and exit.
+-s
+        Skip dot. Do not add a dot in front of the config files when linkins (Default: 0)
+-t
+        The target base path (Default: Home dir)
+-c
+        The path within the dotfiles structure to handle the files. (Default: Current dir)
+USAGE_TEXT
 }
 
 config_path=$(pwd)
@@ -31,6 +47,5 @@ done
 shift "$((OPTIND-1))"
 
 if ! [[ -d $config_path ]]; then
-    echo "[ERROR] No config path found for $config_path"
-    exit 1
+    die "[ERROR] No config path found for $config_path" "1"
 fi

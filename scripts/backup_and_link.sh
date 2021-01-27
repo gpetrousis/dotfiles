@@ -1,12 +1,27 @@
 #!/bin/bash -e
+set -o errexit
+set -o nounset
+set -o pipefail
 
-source $(dirname $0)/common.sh
+die() {
+    local -r msg="${1}"
+    local -r code="${2:-90}"
+    echo "${msg}" >&2
+    exit "${code}"
+}
 
-files_to_exclude=("Makefile README.md")
+readonly conf_file="$(dirname $0)/common.sh"
+
+if [[ ! -f "${conf_file}" ]]; then
+    die "[ERROR] eading configuration file: ${conf_file}" "3"
+fi
+. "${conf_file}"
+
+readonly files_to_exclude=("Makefile README.md")
 
 echo "[INFO] Using $config_path as ConfigPath"
 
-config_files="$config_path/*"
+readonly config_files="$config_path/*"
 
 for file in $config_files; do
     filename=$(basename $file)
@@ -16,7 +31,7 @@ for file in $config_files; do
         continue
     fi
 
-    if [[ "$filename" == *"mac."* ]] && [ "$DOTFILES_TARGET" != "MACOS" ]; then
+    if [[ "$filename" == *"mac."* ]] && ([ -z ${DOTFILES_TARGET}] || ["$DOTFILES_TARGET" != "MACOS" ]); then
         continue
     fi
 
