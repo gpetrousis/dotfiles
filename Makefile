@@ -22,3 +22,5 @@ vscode:
 uninstall_vscode:
 	cd vscode && make uninstall
 
+lint:
+	shellcheck ./scripts/*
