@@ -3,9 +3,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly script_name="${0##*/}"
-
 function usage {
+    readonly script_name="${0##*/}"
+
     cat <<USAGE_TEXT
 Usage: ${script_name} [-h] [-c <ARG>] [-s] [-t <ARG>]
 DESCRIPTION:
@@ -19,29 +19,37 @@ DESCRIPTION:
             Print this help and exit.
     -s
             Skip dot. Do not add a dot in front of the config files when linkins (Default: 0)
-    -t
+    -t  <target-dir>
             The target base path (Default: Home dir)
-    -c
+    -c  <config-base>
             The path within the dotfiles structure to handle the files. (Default: Current dir)
+    -p  <platform>
+            Platform. Available options: linux, mac, picode (Default: linux)
 
 USAGE_TEXT
 }
 
 parse_options() {
+    local OPTIND opt
+
     config_path=$(pwd)
     target_base=$HOME
     skip_dot=0
-    while getopts "hc?st:" opt; do
+    platform=linux
+
+    while getopts "hc:st:p:" opt; do
         case "$opt" in
         h|\?)
             usage
             exit 0
             ;;
-        c)  config_path=$(realpath "$OPTARG")
+        c)  config_path=$(realpath "${OPTARG}")
             ;;
         s)  skip_dot=1
             ;;
         t)  target_base=$OPTARG
+            ;;
+        p)  platform=$OPTARG
             ;;
         esac
     done
@@ -57,7 +65,7 @@ die() {
     exit "${code}"
 }
 
-parse_options
+parse_options "$@"
 
 if ! [[ -d $config_path ]]; then
     die "[ERROR] No config path found for $config_path" "1"
@@ -77,7 +85,7 @@ for file in $config_files; do
         continue
     fi
 
-    if [[ "$filename" == *"mac."* ]] && [[ -z ${DOTFILES_TARGET} || "$DOTFILES_TARGET" != "MACOS" ]]; then
+    if [[ "$filename" = *"mac."* ]] && [[ $platform != "mac" ]]; then
         continue
     fi
 
