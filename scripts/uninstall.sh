@@ -14,11 +14,11 @@ function usage() {
     cat <<USAGE_TEXT
 Usage: ${script_name} [-h] [-p <platform>] [-a] <configs>
 DESCRIPTION:
-    Install the dotfiles for diffent applications.
+    Uninstall the dotfiles for diffent applications.
     Supported configs: ZSH, Vim, VSCode/CodeServer
     
     Example:
-    install.sh -p mac zsh vim
+    uninstall.sh -p mac zsh vim
 
     OPTIONS:
     -h
@@ -26,7 +26,7 @@ DESCRIPTION:
     -p  <platform>
             Platform. Available options: linux, mac, picode (Default: linux)
     -a
-            Install all the config files (zsh, vim, vscode)
+            Uninstall all the config files (zsh, vim, vscode)
 USAGE_TEXT
 }
 
@@ -86,29 +86,19 @@ function is_valid_config() {
     return 1
 }
 
-function install_vim() {
-	echo "[INFO] Creating vim directories"
-	mkdir -p ./vim/vim/plugged
-	mkdir -p ./vim/vim/files/swap
-	mkdir -p ./vim/vim/files/backup
-	mkdir -p ./vim/vim/files/undo
-
-	echo "[INFO] Linking config files"
-	./scripts/backup_and_link.sh -c vim
-
-	echo "[INFO] Installing vim-plug"
-	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-	echo "[INFO] Installing vim plugins"
-	vim +silent +PlugInstall +qall 
+function uninstall_vim() {
+    echo "[INFO] Removing linked files"
+	./scripts/remove_links.sh -c vim
+	echo "[INFO] Deleting vim folder"
+	rm -rf ./vim/vim
 }
 
-function install_zsh() {
-    echo "[INFO] Linking config files"
-	./scripts/backup_and_link.sh -c zsh
+function uninstall_zsh() {
+	echo "[INFO] Removing linked files"
+	./scripts/remove_links.sh -c zsh
 }
 
-function install_vscode() {
+function uninstall_vscode() {
     echo "[INFO] Linking config files"
     case $platform in
     linux)
@@ -122,7 +112,7 @@ function install_vscode() {
         ;;
     esac
 
-    ./scripts/backup_and_link.sh -c vscode -s -t $target_base
+    ./scripts/remove_links.sh -c vscode -s -t $target_base
 }
 
 parse_options "$@"
@@ -146,16 +136,16 @@ fi
 for config in ${configs[@]}; do
     case $config in
     zsh)
-        echo "[INFO] Installing zsh"
-        install_zsh
+        echo "[INFO] Uninstalling zsh"
+        uninstall_zsh
         ;;
     vim)
-        echo "[INFO] Installing vim"
-        install_vim
+        echo "[INFO] Uninstalling vim"
+        uninstall_vim
         ;;
     vscode)
-        echo "[INFO] Installing vscode"
-        install_vscode
+        echo "[INFO] Uninstalling vscode"
+        uninstall_vscode
         ;;
     esac
 done

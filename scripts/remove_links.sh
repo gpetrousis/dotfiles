@@ -29,17 +29,17 @@ parse_options() {
     config_path=$(pwd)
     target_base=$HOME
     skip_dot=0
-    while getopts "hc?st:" opt; do
+    while getopts "hc:st:" opt; do
         case "$opt" in
         h|\?)
             usage
             exit 0
             ;;
-        c)  config_path=$(realpath "$OPTARG")
+        c)  config_path=$(realpath "${OPTARG}")
             ;;
         s)  skip_dot=1
             ;;
-        t)  target_base=$OPTARG
+        t)  target_base=${OPTARG}
             ;;
         esac
     done
@@ -54,7 +54,7 @@ die() {
     exit "${code}"
 }
 
-parse_options
+parse_options "$@"
 
 if ! [[ -d $config_path ]]; then
     die "[ERROR] No config path found for $config_path" "1"
