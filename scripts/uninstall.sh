@@ -8,14 +8,14 @@ source $SCRIPTPATH/common.sh
 
 function uninstall_vim() {
     echo "[INFO] Removing linked files"
-	./scripts/remove_links.sh -c vim
+	./scripts/remove_links.sh -p $platform -c vim
 	echo "[INFO] Deleting vim folder"
 	rm -rf ./vim/vim
 }
 
 function uninstall_zsh() {
 	echo "[INFO] Removing linked files"
-	./scripts/remove_links.sh -c zsh
+	./scripts/remove_links.sh -p $platform -c zsh
 }
 
 function uninstall_vscode() {
@@ -32,7 +32,7 @@ function uninstall_vscode() {
         ;;
     esac
 
-    ./scripts/remove_links.sh -c vscode -s -t $target_base
+    ./scripts/remove_links.sh -p $platform -c vscode -s -t $target_base
 }
 
 for config in ${configs[@]}; do

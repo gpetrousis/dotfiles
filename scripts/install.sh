@@ -36,7 +36,7 @@ function install_vim() {
 	mkdir -p ./vim/vim/files/undo
 
 	echo "[INFO] Linking config files"
-	./scripts/backup_and_link.sh -c vim
+	./scripts/backup_and_link.sh -p $platform -c vim
 
 	echo "[INFO] Installing vim-plug"
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -47,7 +47,7 @@ function install_vim() {
 
 function install_zsh() {
     echo "[INFO] Linking config files"
-	./scripts/backup_and_link.sh -c zsh
+	./scripts/backup_and_link.sh -p $platform -c zsh
 }
 
 function install_vscode() {
@@ -64,7 +64,7 @@ function install_vscode() {
         ;;
     esac
 
-    ./scripts/backup_and_link.sh -c vscode -s -t $target_base
+    ./scripts/backup_and_link.sh -p $platform -c vscode -s -t $target_base
 }
 
 for config in ${configs[@]}; do

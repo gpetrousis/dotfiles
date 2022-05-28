@@ -129,6 +129,13 @@ if [[ -f ~/.mac.zsh ]]; then
     source ~/.mac.zsh
 fi
 
+############################
+## PiCode specific Config ##
+############################
+if [[ -f ~/.picode.zsh ]]; then
+    source ~/.picode.zsh
+fi
+
 ##################
 ## Extra Config ##
 ##################

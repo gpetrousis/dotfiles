@@ -85,7 +85,11 @@ for file in $config_files; do
         continue
     fi
 
-    if [[ "$filename" = *"mac."* ]] && [[ $platform != "mac" ]]; then
+    if [[ "$filename" = *"mac."* ]] && [[ "$platform" != "mac" ]]; then
+        continue
+    fi
+
+    if [[ "$filename" = *"picode."* ]] && [[ "$platform" != "picode" ]]; then
         continue
     fi
 
