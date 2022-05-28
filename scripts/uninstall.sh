@@ -3,88 +3,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly AVAILABLE_CONFIGS="zsh vim vscode"
-readonly AVAILABLE_PLATFORMS="linux mac picode"
-all=0
-configs=()
-
-function usage() {
-    readonly script_name="${0##*/}"
-
-    cat <<USAGE_TEXT
-Usage: ${script_name} [-h] [-p <platform>] [-a] <configs>
-DESCRIPTION:
-    Uninstall the dotfiles for diffent applications.
-    Supported configs: ZSH, Vim, VSCode/CodeServer
-    
-    Example:
-    uninstall.sh -p mac zsh vim
-
-    OPTIONS:
-    -h
-            Print this help and exit.
-    -p  <platform>
-            Platform. Available options: linux, mac, picode (Default: linux)
-    -a
-            Uninstall all the config files (zsh, vim, vscode)
-USAGE_TEXT
-}
-
-function parse_options() {
-    local OPTIND opt
-
-    platform="linux"
-    while getopts "hp:a" opt; do
-        case "$opt" in
-        h|\?)
-            usage
-            exit 0
-            ;;
-        p)
-            platform=${OPTARG}
-            ;;
-        a)  
-            all=1
-            ;;
-        esac
-    done
-
-    shift "$((OPTIND-1))"
-
-    while test $# -gt 0; do
-        config=$1
-        if ! is_valid_config "$config"; then
-            die "Invalid config. $config is not in $AVAILABLE_CONFIGS"
-        fi    
-        configs+=( "$config" )
-        shift
-    done
-}
-
-function die() {
-    local -r msg="${1}"
-    local -r code="${2:-1}"
-    echo "${msg}" >&2
-    exit "${code}"
-}
-
-function is_valid_platform() {
-    for available_platform in $AVAILABLE_PLATFORMS; do
-        if [[ $1 == $available_platform ]]; then
-            return 0
-        fi
-    done
-    return 1
-}
-
-function is_valid_config() {
-    for available_config in $AVAILABLE_CONFIGS; do
-        if [[ $1 == $available_config ]]; then
-            return 0
-        fi
-    done
-    return 1
-}
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+source $SCRIPTPATH/common.sh
 
 function uninstall_vim() {
     echo "[INFO] Removing linked files"
@@ -114,24 +34,6 @@ function uninstall_vscode() {
 
     ./scripts/remove_links.sh -c vscode -s -t $target_base
 }
-
-parse_options "$@"
-
-if ! is_valid_platform "$platform"; then
-    die "[ERROR] Invalid platform. $platform is not in $AVAILABLE_PLATFORMS"
-fi
-
-if [[ $all -eq 0 ]] && [[ ${#configs[@]} -eq 0 ]]; then
-    die "[ERROR] You need to specify either -a or a list of configs."
-fi
-
-if [[ $all -eq 1 ]]; then
-    if ((${#configs[@]})); then
-        die "[ERROR] Invalid arguments. Cannot use -a with specific configs."
-    fi
-    configs=( $AVAILABLE_CONFIGS )
-fi
-
 
 for config in ${configs[@]}; do
     case $config in

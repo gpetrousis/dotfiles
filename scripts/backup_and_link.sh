@@ -58,7 +58,7 @@ parse_options() {
 }
 
 
-die() {
+fatal() {
     local -r msg="${1}"
     local -r code="${2:-90}"
     echo "${msg}" >&2
@@ -68,7 +68,7 @@ die() {
 parse_options "$@"
 
 if ! [[ -d $config_path ]]; then
-    die "[ERROR] No config path found for $config_path" "1"
+    fatal "[ERROR] No config path found for $config_path" "1"
 fi
 
 readonly files_to_exclude=("Makefile README.md")

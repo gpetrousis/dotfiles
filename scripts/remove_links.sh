@@ -47,7 +47,7 @@ parse_options() {
     shift "$((OPTIND-1))"
 }
 
-die() {
+fatal() {
     local -r msg="${1}"
     local -r code="${2:-90}"
     echo "${msg}" >&2
@@ -57,7 +57,7 @@ die() {
 parse_options "$@"
 
 if ! [[ -d $config_path ]]; then
-    die "[ERROR] No config path found for $config_path" "1"
+    fatal "[ERROR] No config path found for $config_path" "1"
 fi
 
 echo "[INFO] Using $config_path as ConfigPath"
