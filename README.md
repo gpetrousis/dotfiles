@@ -88,6 +88,7 @@ created from the install command.
 If you find something that is not working as expected feel free to [open an issue](https://github.com/gpetrousis/dotfiles/issues) and I will try to take a look at it as fast as possible
 
 ## Future work
+- Move backup_and_link.sh and remove_links.sh to common scripts
 - Add AWS Profile to prompt
 
 ## Status
