@@ -6,50 +6,83 @@ Available configurations:
 - [Vim](vim/)
 - [VSCode](vscode/)
 
-The configurations should work on both Linux and MacOS
+The configurations should work on Linux, MacOS and RaspberryPi configured as a
+code server.
 
 ![GitHub](https://img.shields.io/github/license/gpetrousis/dotfiles.svg)
 
 ## Fair warning
-If you want to use the dotfiles you should double check and evaluate them. Don't execute commands and apply settings that you don't understand. I tried my best to document the files so this can be easier.
+If you want to use the dotfiles you should double check and evaluate them. Don't
+execute commands and apply settings that you don't understand. I tried my best
+to document the files so this can be easier.
 
 At the end of the day you are responsible for what is running on your machine.
 
 ## Instalation
 ### Clone the repo
-`git clone git@github.com:gpetrousis/dotfiles.git && cd dotfiles`
+```shell
+git clone git@github.com:gpetrousis/dotfiles.git && cd dotfiles
+```
 
 ### Run the install script
-`make install`
+```shell
+./scripts/install.sh -a
+```
 
-To install configurations separately you can either:
-- Run `make <config>`. Eg: `make zsh`
-- Navigate to the config folder and install. Eg: `cd vim && make install`
+To install configurations separately you can run:
+```shell
+./scripts/install.sh -p <platform> <config>
+```
 
-The install script will link all the available config files to your Home path, create necessary directories and download any needed dependencies.
+Eg:
 
-In case there is already an existing link it will be deleted and if there is already a config file it will be kept as backup in the format of `<filename>.<date>.backup`.
+```shell
+./scripts/install.sh zsh
+```
 
-Any created folders will be kept in the repo directory and will be linked as well. This way it's easier to clean-up in case you don't want to use these configs anymore.
+The install script will link all the available config files to your Home path,
+create necessary directories and download any needed dependencies.
+
+In case there is already an existing link it will be deleted and if there is
+already a config file it will be kept as backup in the format of
+`<filename>.<date>.backup`.
+
+Any created folders will be kept in the repository directory and will be linked
+as well. This way it's easier to clean-up in case you don't want to use these
+configs anymore.
 
 #### For MacOS installation run
-`make install DOTFILES_TARGET="MACOS"`
+```shell
+./scripts/install.sh -a -p mac
+```
 
 This will link MacOS specific config files.
+#### For PiCode installation run
+```shell
+./scripts/install.sh -a -p picode
+```
+
+This will link specific config files for the code-server.
 
 ### Uninstall
-`make uninstall`
+```shell
+./scripts/uninstall.sh -a -p <platrofm>
+```
 
-#### For MacOS uninstallation run
-`make uninstall DOTFILES_TARGET="MACOS"`
+Similar to the install scripts the platform can be linux, zsh or picode. The
+script will unlink the platrofm config specific files.
 
-This will unlink MacOS specific config files.
+To uninstall configurations separately you can run:
+```shell
+./scripts/uninstall.sh -p <platrofm> <config>
+```
+Eg:
+```shell
+./scripts/uninstall.sh -p picode vim
+```
 
-To uninstall configurations separately you can either:
-- Run `make uninstall_<config>`. Eg: `make uninstall_zsh`
-- Navigate to the config folder and uninstall. Eg: `cd vim && make uninstall`
-
-The uninstall script will delete any linked files and directories that were created from the install command.
+The uninstall script will delete any linked files and directories that were
+created from the install command.
 
 ## Support
 If you find something that is not working as expected feel free to [open an issue](https://github.com/gpetrousis/dotfiles/issues) and I will try to take a look at it as fast as possible
