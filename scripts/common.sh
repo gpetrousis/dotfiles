@@ -75,3 +75,7 @@ if [[ $all -eq 1 ]]; then
     fi
     configs=( $AVAILABLE_CONFIGS )
 fi
+$ git branch -m OLD-BRANCH-NAME NEW-BRANCH-NAME
+$ git fetch origin
+$ git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
+$ git remote set-head origin -a
